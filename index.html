@@ -121,7 +121,6 @@ var myHeaders = new Headers();
 myHeaders.append('Content-Type', 'text/html');
 fetch(quizUrl,{method: 'get'}).then(function(response) {
     response.text().then(function(text) {
-        console.log(text);
     var obj = JSON.parse(text);
     var content1 = obj.title1;
     var content2 = obj.title2;
@@ -143,7 +142,6 @@ var myHeaders2 = new Headers();
 myHeaders2.append('Content-Type', 'text/html');
 fetch(quizUrl2,{method: 'get'}).then(function(response) {
     response.text().then(function(text1) {
-        console.log(text1);
     var obj2 = JSON.parse(text1);
     var im1 = obj2.image1;
     var im2 = obj2.image2;
