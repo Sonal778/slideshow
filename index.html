@@ -1,36 +1,4 @@
-<?php
-
-//extracting json from wp-json api
-$url1='https://moodloging.firebaseio.com/newsrush/title.json';
-$url2='https://moodloging.firebaseio.com/newsrush/image.json';
-// using file() function to get content
-$lines_array1=file($url1);
-$lines_array2=file($url2);
-// turn array into one variable
-$lines_string1=implode('',$lines_array1);
-$lines_string2=implode('',$lines_array2);
-//output, you can also save it locally on the server
-
-// array conversion of json
-$someArray1 = json_decode($lines_string1, true);
-$someArray2 = json_decode($lines_string2, true);
-$newpost = 1;
-
-    foreach ($someArray1 as $key => $value) {
-    $title1  = $someArray1['title1'];
-    $title2  = $someArray1['title2'];
-    $title3  = $someArray1['title3'];
-    $title4  = $someArray1['title4'];
-    $title5  = $someArray1['title5'];
-    $image1  = $someArray2['image1'];
-    $image2  = $someArray2['image2'];
-    $image3  = $someArray2['image3'];
-    $image4  = $someArray2['image4'];
-    $image5  = $someArray2['image5'];
-    $newpost = $newpost+1;
-    } 
-
-?>
+<!DOCTYPE html>
 <html>
 <head>
 <script src="https://thunkable.github.io/webviewer-extension/thunkableWebviewerExtension.js" type="text/javascript"></script>
@@ -41,6 +9,8 @@ body {font-family: Verdana, sans-serif;}
 img {vertical-align: middle;}
 
 .slideshow-container {
+  max-width: 1000px;
+  max-height: 250px;
   position: relative;
   margin: auto;
 }
@@ -53,6 +23,7 @@ img {vertical-align: middle;}
   bottom: 8px;
   width: 100%;
   text-align: left;
+  text-shadow: 2px 2px 4px #000000;
 }
 
 
@@ -107,7 +78,6 @@ img {
 
 @media only screen and (max-width: 300px) {
   .text {font-size: 11px}
-  .img  {max-height: 250px}
 }
 </style>
 </head> 
@@ -115,19 +85,81 @@ img {
 <div class="slideshow-container"> 
 <div class="mySlides fade"> 
 <div class="card" onclick="myFunction()">   
-<img src=<?php echo $image1;?> style="width:100%">   <div class="text"><?php echo $title1;?></div> 
+<img src="https://image.shutterstock.com/image-photo/mountains-during-sunset-beautiful-natural-260nw-407021107.jpg" style="width:100%" id="im01">   
+<div class="text" id="id01">content1</div> 
 </div> </div>  
 <div class="mySlides fade"> 
 <div class="card" onclick="myFunction()">   
-<img src=<?php echo $image2;?> style="width:100%" "height:250px">   
-<div class="text"><?php echo $title2;?></div> 
-</div> </div>  </div> 
+<img src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg" style="width:100%" id="im02">   
+<div class="text" id="id02">content2</div>
+</div> </div>
+<div class="mySlides fade"> 
+<div class="card" onclick="myFunction()">   
+<img src="https://cdn.pixabay.com/photo/2015/06/19/21/24/the-road-815297__340.jpg" style="width:100%" id="im03">   
+<div class="text" id="id03">content3</div>
+</div> </div>
+<div class="mySlides fade"> 
+<div class="card" onclick="myFunction()">   
+<img src="https://i.ytimg.com/vi/J3pF2jkQ4vc/maxresdefault.jpg" style="width:100%" id="im04">   
+<div class="text" id="id04">content4</div>
+</div> </div>
+<div class="mySlides fade"> 
+<div class="card" onclick="myFunction()">   
+<img src="https://unsplash.com/photos/RoYujmHrdxA/download" style="width:100%" id="im05">   
+<div class="text" id="id05">content5</div>
+</div> </div> </div>
 <br>  <div style="text-align:center">   
 <span class="dot"></span>    
-<span class="dot"></span>  
-</div> 
-
+<span class="dot"></span>
+<span class="dot"></span>    
+<span class="dot"></span>
+<span class="dot"></span>
+</div>    
 <script>
+var quizUrl = 'https://moodloging.firebaseio.com/newsrush/title.json';
+var myHeaders = new Headers();
+myHeaders.append('Content-Type', 'text/html');
+fetch(quizUrl,{method: 'get'}).then(function(response) {
+    response.text().then(function(text) {
+        console.log(text);
+    var obj = JSON.parse(text);
+    var content1 = obj.title1;
+    var content2 = obj.title2;
+    var content3 = obj.title3;
+    var content4 = obj.title4;
+    var content5 = obj.title5;
+    document.getElementById("id01").innerHTML = content1;
+    document.getElementById("id02").innerHTML = content2;
+    document.getElementById("id03").innerHTML = content3;
+    document.getElementById("id04").innerHTML = content4;
+    document.getElementById("id05").innerHTML = content5;
+    })
+}).catch(function(err) {
+  console.log(err)
+});
+
+var quizUrl2 = 'https://moodloging.firebaseio.com/newsrush/image.json';
+var myHeaders2 = new Headers();
+myHeaders2.append('Content-Type', 'text/html');
+fetch(quizUrl2,{method: 'get'}).then(function(response) {
+    response.text().then(function(text1) {
+        console.log(text1);
+    var obj2 = JSON.parse(text1);
+    var im1 = obj2.image1;
+    var im2 = obj2.image2;
+    var im3 = obj2.image3;
+    var im4 = obj2.image4;
+    var im5 = obj2.image5;
+    document.getElementById("im01").src = im1;
+    document.getElementById("im02").src = im2;
+    document.getElementById("im03").src = im3;
+    document.getElementById("im04").src = im4;
+    document.getElementById("im05").src = im5;
+    })
+}).catch(function(err) {
+  console.log(err)
+});
+
 var slideIndex = 0;
 showSlides();
 
@@ -146,7 +178,6 @@ function showSlides() {
   slides[slideIndex-1].style.display = "block";  
   dots[slideIndex-1].className += " active";
   setTimeout(showSlides, 2000);
-
 }
 
 function myFunction() {
